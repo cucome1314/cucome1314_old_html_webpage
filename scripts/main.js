@@ -1,7 +1,7 @@
 //var head=document.querySelector('h1');
 //head.textContent='hello head';
 document.querySelector('h1').onclick = function() {
-    alert('Ouch! Stop poking me!');
+    alert('點蝦咪');
     var head=document.querySelector('h1');
     head.textContent='hello head';
 }
