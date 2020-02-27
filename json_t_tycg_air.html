@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>cucome1314的web練習</title>
+        <link href="style/style.css" rel="stylesheet" type="text/css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <header>
+            <h1>cucome1314的web練習</h1>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="contacts.html">Source</a></li>
+                <li><a href="assaults_timer.html">Assaults</a></li>
+                <li>About</li>
+                <li><a href="">More</a></li>
+            </ul>
+        </nav>
+        <div id="d1">
+            <p id="p1">AAAAA</p>
+        </div>
+        
+        <script type="text/javascript">
+            
+            var p = document.querySelector('#p1');
+            const div = document.querySelector('div');
+            //var requestURL ="https://json2jsonp.com/?url=http://data.tycg.gov.tw/api/v1/rest/datastore/1a1d3bae-57b1-4f48-817b-c59c0d233a66?format=json";
+            var requestURL ="source/tycg_air.json"
+            /*$(function(){
+                $.ajax({
+                    type: "GET",
+                    url: requestURL,
+                    dataType: "jsonp",
+                    success: show,
+                    error: function(){
+                        alert("error");
+                    }
+                });
+            });
+            function show(data){
+                console.log(data.length);
+                
+                p.innerHTML +=data;
+            }*/
+            
+            
+            //p.innerHTML="A";
+
+            
+            var request = new XMLHttpRequest();
+            request.open('GET', requestURL);
+            request.responseType = 'json';
+            request.send();
+            
+            p.innerHTML =requestURL+ '<br>connection error';
+            request.onload = function() {
+                var itemid=[];
+                
+                var res_ori = request.response;
+
+                p.innerHTML =res_ori;
+                
+                p.innerHTML = '空氣品質小時值_桃園市_龍潭站<br>最後更新時間:'+res_ori[0].MonitorDate;
+                for(i=0;i<res_ori.length;i++ ){
+                    var myPara1 = document.createElement('p');
+                    if(inarray(itemid,res_ori[i].ItemId))
+                        break;
+                    itemid.push(res_ori[i].ItemId);
+                    myPara1.textContent =  res_ori[i].ItemName+'(' +res_ori[i].ItemEngName+'):'+res_ori[i].Concentration+res_ori[i].ItemUnit;
+                    div.appendChild(myPara1);
+                }
+            }
+            function inarray(arr,new_id){
+                var arr_size=arr.length;
+                for(j=0;j<arr_size;j++){
+                    if(arr[j]===new_id)
+                        return true;
+                }
+                return false;
+            }
+        </script>
+    </body>
+</html>
