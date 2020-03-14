@@ -26,10 +26,16 @@ h2 {
     color: rgb(0, 2, 3);
     /*text-shadow: 3px 3px 1px black;*/
 }
-p, li {
+ li {
     font-size: 30px;    
     line-height: 2;
     letter-spacing: 1px;
+}
+p{
+    font-size: 30px;    
+    line-height: 2;
+    letter-spacing: 1px;
+    color: black;
 }
 img {
     display: block;

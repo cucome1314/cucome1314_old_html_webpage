@@ -27,13 +27,52 @@
             
             var p = document.querySelector('#p1');
             const div = document.querySelector('div');
-            //var requestURL ="https://json2jsonp.com/?url=http://data.tycg.gov.tw/api/v1/rest/datastore/1a1d3bae-57b1-4f48-817b-c59c0d233a66?format=json";
-            var requestURL ="source/tycg_air_new.json"
-            /*$(function(){
+            //var requestURL ="http://data.tycg.gov.tw/api/v1/rest/datastore/1a1d3bae-57b1-4f48-817b-c59c0d233a66?format=json&callback=?";
+            //var requestURL ="source/tycg_air_new.json"
+            var requestURL ="https://opendata.epa.gov.tw/webapi/api/rest/datastore/355000000I-000259?filters=SiteId eq '21'&sort=SiteName&offset=0&limit=1000&format=json&token=PfRByb0uMUi8Jiuu9DwDTA&callback=?"
+            var tar_api=['PM2.5','NO2','PM10','O3','CO','SO2'];
+            //*************************************//
+            // 懶惰打參數 抓資料                    //
+            var doc_sample="source/tycg_air_new.json"
+            var request = new XMLHttpRequest();
+            var res_ori=[];
+            request.open('GET', doc_sample);
+            request.responseType = 'json';
+            request.send();
+            request.onload = function() {
+                res_ori = request.response;
+            }
+            //
+            //*************************************//
+            p.innerHTML ="connecting...";
+            $(document).ready(function () {
+                console.log("讀取好久~~");
+                $.getJSON(requestURL, function () {
+                    format: "json"
+                }).done(function (data) {
+                    $.each(data.result.records, function (entryIdx, entry) {
+                        p.innerHTML = '空氣品質小時值_桃園市_龍潭站<br>最後更新時間:'+entry["PublishTime"]+"<br>空氣品質:"+entry["Status"]+"<br>AQI:"+entry["AQI"];                        
+                        for(i=0;i<6;i++ ){
+                            var myPara1 = document.createElement('p');
+                            myPara1.textContent =  res_ori[i].ItemName+'(' +res_ori[i].ItemEngName+'):'+entry[tar_api[i]]+res_ori[i].ItemUnit;
+                            div.appendChild(myPara1);
+                        }
+
+
+                    });
+                });
+            });
+            
+            /*//////////////////
+            //以下舊版 未能實現
+            //2020.03.14
+            //
+
+            $(function(){
                 $.ajax({
                     type: "GET",
                     url: requestURL,
-                    dataType: "jsonp",
+                    dataType: "json",
                     success: show,
                     error: function(){
                         alert("error");
@@ -44,7 +83,7 @@
                 console.log(data.length);
                 
                 p.innerHTML +=data;
-            }*/
+            }
             
             
             //p.innerHTML="A";
@@ -80,7 +119,7 @@
                         return true;
                 }
                 return false;
-            }
+            }*/
         </script>
     </body>
 </html>
