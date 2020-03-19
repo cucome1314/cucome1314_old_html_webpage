@@ -1,5 +1,6 @@
 //var head=document.querySelector('h1');
 //head.textContent='hello head';
+//廢棄惹 換成REACT
 document.querySelector('h1').onclick = function() {
     alert('點蝦咪');
     var head=document.querySelector('h1');
